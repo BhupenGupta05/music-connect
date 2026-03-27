@@ -11,7 +11,21 @@ export default function middleware(req: NextRequest) {
     const isLoggedIn = !!sessionToken;
 
     // not logged in → send to login
-    if (!isLoggedIn) {
+    if (path === "/login" && isLoggedIn) {
+        return NextResponse.redirect(new URL("/dashboard", req.url));
+    }
+
+    const protectedRoutes = [
+        "/dashboard",
+        "/onboarding",
+        "/match",
+        "/chat",
+        "/profile",
+    ]
+
+    const isProtected = protectedRoutes.some((route) => path.startsWith(route));
+
+    if(isProtected && !isLoggedIn) {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
@@ -20,5 +34,5 @@ export default function middleware(req: NextRequest) {
 
 
 export const config = {
-    matcher: ["/dashboard/:path*", "/onboarding/:path*", "/match/:path*"],
-}
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)" ],
+};

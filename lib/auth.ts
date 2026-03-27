@@ -16,6 +16,7 @@ const authOptions: NextAuthOptions = {
             authorization: {
                 params: {
                     scope: `openid email profile ${YOUTUBE_SCOPES}`,
+                    access_type: "offline",
                     prompt: "consent",
                 }
             }
@@ -31,11 +32,6 @@ const authOptions: NextAuthOptions = {
             console.log({ user, profile, account });
             return true;
         },
-        // async redirect({ url, baseUrl }) {
-        //     if (url.startsWith(baseUrl)) return url;
-
-        //     return baseUrl;
-        // },
         async session({ session, user }) {
             if (session.user) {
                 session.user.id = user.id;
