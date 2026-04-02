@@ -1,0 +1,198 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--gray-2);
+}
+
+.logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.navLink {
+  font-size: 14px;
+  color: var(--gray-5);
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--gray-3);
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.navLink:hover {
+  background: var(--gray-1);
+}
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-5);
+  background: var(--gray-1);
+  border: 1px solid var(--gray-2);
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.h1 {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+
+.serif {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.sub {
+  font-size: 1.05rem;
+  color: var(--gray-5);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+}
+
+.ctas {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ctaPrimary {
+  padding: 0.75rem 1.75rem;
+  background: var(--black);
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.ctaPrimary:hover {
+  opacity: 0.9;
+}
+
+.ctaSecondary {
+  padding: 0.75rem 1.75rem;
+  color: var(--gray-5);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 15px;
+  border: 1px solid var(--gray-3);
+  transition: all 0.15s;
+}
+
+.ctaSecondary:hover {
+  background: var(--gray-1);
+  border-color: var(--gray-4);
+}
+
+.section {
+  padding: 4rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.h2 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stepCard {
+  padding: 1.5rem;
+  border: 1px solid var(--gray-2);
+  border-radius: 12px;
+  background: var(--gray-1);
+}
+
+.stepNum {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--gray-4);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.stepTitle {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.stepBody {
+  font-size: 14px;
+  color: var(--gray-5);
+  line-height: 1.6;
+}
+
+.privacy {
+  background: var(--gray-1);
+  border-top: 1px solid var(--gray-2);
+  border-bottom: 1px solid var(--gray-2);
+  padding: 1.25rem 2rem;
+  text-align: center;
+}
+
+.privacyText {
+  font-size: 14px;
+  color: var(--gray-5);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  font-size: 13px;
+}
+
+.footerText {
+  color: var(--gray-4);
+}
+
+/* Optional: Add hover states for better interactivity */
+.stepCard:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}

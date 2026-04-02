@@ -1,109 +1,94 @@
-'use client';
+"use client";
 
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import styles from "./page.module.css"
 
-export default function Page() {
-  const { data: session, update } = useSession();
-  const router = useRouter();
+export default function OnboardingPage() {
+  const { update } = useSession()
+  const router = useRouter()
+  const [handle, setHandle] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  const [handle, setHandle] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const isValid = handle.length >= 3 && /^[a-z0-9_]+$/.test(handle)
 
   async function submitHandle() {
-    if (!handle || handle.length < 3) {
-      setError("Handle must be at least 3 characters long");
-      return;
+    if (!isValid) {
+      setError("3+ characters, only letters, numbers and underscores")
+      return
     }
-
-    setLoading(true);
-    setError("");
+    setLoading(true)
+    setError("")
 
     const res = await fetch("/api/user/handle", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ handle }),
     })
-
-    const data = await res.json();
+    const data = await res.json()
 
     if (!res.ok) {
-      setError(data.error || "Something went wrong");
-      setLoading(false);
-      return;
+      setError(data.error || "Something went wrong")
+      setLoading(false)
+      return
     }
 
-    await update();
-    router.push("/dashboard");
+    await update()
+    router.push("/dashboard")
   }
 
-
-
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2>Pick your alias</h2>
-        <p style={{ color: "#888" }}>
-          This is how others will find you — no real name needed
-        </p>
-        <input
-          style={styles.input}
-          placeholder="e.g. indievibes99"
-          value={handle}
-          onChange={(e) => setHandle(e.target.value.toLowerCase())}
-        />
-        {error && <p style={{ color: "red", fontSize: 13 }}>{error}</p>}
+    <main className={styles.page}>
+      <div className={styles.card}>
+        <div className={styles.top}>
+          <div className={styles.step}>step 1 of 1</div>
+          <h1 className={styles.h1}>Pick your alias</h1>
+          <p className={styles.sub}>
+            This is how others find you. No real name needed —
+            just something that feels like you.
+          </p>
+        </div>
+
+        <div className={styles.inputWrap}>
+          <span className={styles.at}>@</span>
+          <input
+            className={styles.input}
+            placeholder="indievibes99"
+            value={handle}
+            maxLength={24}
+            onChange={(e) => {
+              setHandle(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ""))
+              setError("")
+            }}
+            onKeyDown={(e) => e.key === "Enter" && submitHandle()}
+            autoFocus
+          />
+        </div>
+
+        {error && <p className={styles.error}>{error}</p>}
+        {handle.length >= 3 && !error && (
+          <p className={styles.hint}>Looks good!</p>
+        )}
+
         <button
-          style={styles.button}
+          className={styles.btn}
+          style={{
+            opacity: isValid ? 1 : 0.4,
+            cursor: isValid ? "pointer" : "not-allowed",
+          }}
           onClick={submitHandle}
-          disabled={loading}
+          disabled={!isValid || loading}
         >
-          {loading ? "Saving..." : "Continue"}
+          {loading ? "Saving..." : "Continue →"}
         </button>
+
+        <p className={styles.rules}>
+          Letters, numbers and underscores only · 3–24 characters
+        </p>
       </div>
-    </div>
+    </main>
   )
 }
 
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#f5f5f5",
-  },
-  card: {
-    padding: "2rem",
-    borderRadius: "10px",
-    background: "white",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-    textAlign: "center",
-    width: 320,
-  },
-  input: {
-    width: "100%",
-    padding: "0.75rem",
-    borderRadius: "6px",
-    border: "1px solid #ddd",
-    marginTop: "1rem",
-    marginBottom: "0.5rem",
-    fontSize: 15,
-  },
-  button: {
-    marginTop: "0.5rem",
-    padding: "0.75rem 1.5rem",
-    borderRadius: "6px",
-    border: "none",
-    background: "#4285F4",
-    color: "white",
-    cursor: "pointer",
-    fontWeight: "bold",
-    width: "100%",
-  },
-};

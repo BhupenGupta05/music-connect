@@ -1,0 +1,301 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--gray-1);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    background: #fff;
+    border-bottom: 1px solid var(--gray-2);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-family: var(--serif);
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--black);
+}
+
+.btn {
+    font-size: 14px;
+    color: var(--gray-5);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--gray-3);
+    border-radius: 6px;
+    transition: all 0.15s;
+    cursor: pointer;
+    background: transparent;
+}
+
+.btn:hover {
+    color: #dc2626;
+    border-color: #fca5a5;
+    background: #fef2f2;
+}
+
+.navRight {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.handleBadge {
+    font-size: 13px;
+    color: var(--gray-5);
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
+    border-radius: 20px;
+    padding: 0.3rem 0.75rem;
+}
+
+.content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+}
+
+.welcome {
+    margin-bottom: 2rem;
+}
+
+.h1 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+}
+
+.serif {
+    font-family: var(--serif);
+    font-style: italic;
+}
+
+.sub {
+    font-size: 15px;
+    color: var(--gray-5);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--gray-2);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: all 0.2s ease;
+}
+
+.card:hover:not(.cardDisabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.cardDisabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cardTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardIcon {
+    font-size: 20px;
+}
+
+.pill {
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 20px;
+    padding: 0.25rem 0.6rem;
+}
+
+.pillSuccess {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.pillWarning {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+.pillMuted {
+    background: var(--gray-2);
+    color: var(--gray-5);
+}
+
+.cardTitle {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.cardBody {
+    font-size: 13px;
+    color: var(--gray-5);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.cardBtn {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+    margin-top: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: gap 0.2s ease;
+}
+
+.cardBtn:hover {
+    gap: 0.5rem;
+    text-decoration: underline;
+}
+
+.idStrip {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: #fff;
+    border: 1px solid var(--gray-2);
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.idStrip:hover {
+    border-color: var(--gray-3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.idLabel {
+    font-size: 12px;
+    color: var(--gray-4);
+    flex-shrink: 0;
+}
+
+.idCode {
+    font-size: 12px;
+    color: var(--gray-5);
+    font-family: monospace;
+    background: var(--gray-1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    word-break: break-all;
+    user-select: all;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.idCode:hover {
+    background: var(--gray-2);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .nav {
+        padding: 0.875rem 1.25rem;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .handleBadge {
+        font-size: 12px;
+        padding: 0.25rem 0.6rem;
+    }
+
+    .content {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .h1 {
+        font-size: 1.5rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 0.875rem;
+    }
+
+    .card {
+        padding: 1.25rem;
+    }
+
+    .idStrip {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .idLabel {
+        font-size: 11px;
+    }
+
+    .idCode {
+        font-size: 11px;
+        word-break: break-all;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navRight {
+        gap: 0.5rem;
+    }
+
+    .handleBadge {
+        display: none;
+    }
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Optional: Add tooltip for copy functionality */
+.idCode {
+    position: relative;
+}
+
+.idCode:active {
+    background: var(--gray-3);
+}

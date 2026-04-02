@@ -23,6 +23,8 @@ model User {
   accounts Account[]
   sessions Session[]
   profile  MusicProfile?
+  oauthStates   OAuthState[]
+  connections Connection[]
   tokens   OAuthToken[]
 }
 
@@ -39,6 +41,8 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
+
+  isActive          Boolean @default(true)   //check which login provider is active
 
   refresh_token_expires_in Int?
 
@@ -74,6 +78,26 @@ model MusicProfile {
   topGenres   Json?
   moodScores  Json?
   refreshedAt DateTime @updatedAt
+}
+
+model Connection {
+  id          String   @id @default(cuid())
+  userId      String   
+  provider    String   //"youtube","spotify"
+  active      Boolean  @default(true)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, provider])
+}
+
+model OAuthState {
+  id        String   @id @default(cuid())
+  token     String   @unique @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 
 model OAuthToken {

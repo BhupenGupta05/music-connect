@@ -3,10 +3,6 @@ import { prisma } from "@/lib/prisma"
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import GoogleProvider from "next-auth/providers/google";
 
-const YOUTUBE_SCOPES = [
-    "https://www.googleapis.com/auth/youtube.readonly",
-].join(" ")
-
 const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -15,7 +11,7 @@ const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             authorization: {
                 params: {
-                    scope: `openid email profile ${YOUTUBE_SCOPES}`,
+                    scope: `openid email profile`,
                     access_type: "offline",
                     prompt: "consent",
                 }
@@ -27,7 +23,32 @@ const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async signIn({ user, account, profile }) {
-            if (!account || account.provider !== "google") return false;
+            if (!account) return false;
+
+            const hasYouTubeScope = account.scope?.includes("youtube");
+
+            if (hasYouTubeScope && account.access_token && user.id) {
+                await prisma.oAuthToken.upsert({
+                    where: {
+                        userId_platform: {
+                            userId: user.id,
+                            platform: "YOUTUBE",
+                        }
+                    },
+                    update: {
+                        accessToken: account.access_token,
+                        refreshToken: account.refresh_token ?? "",
+                        expiresAt: new Date((account.expires_at ?? 0) * 1000),
+                    },
+                    create: {
+                        userId: user.id,
+                        platform: "YOUTUBE",
+                        accessToken: account.access_token,
+                        refreshToken: account.refresh_token ?? "",
+                        expiresAt: new Date((account.expires_at ?? 0) * 1000),
+                    }
+                });
+            }
 
             console.log({ user, profile, account });
             return true;
@@ -54,6 +75,7 @@ const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/login',
         error: '/login',
+        signOut: '/login',
         newUser: '/onboarding'
     }
 };
